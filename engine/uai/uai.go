@@ -33,9 +33,9 @@ func Loop() {
 		}
 		input = input[:len(input) - 1]
 
-		if strings.HasPrefix(input, "quit") {
+		if input == "quit" {
 			break
-		} else if strings.HasPrefix(input, "isready") {
+		} else if input == "isready" {
 			IsReady()
 		} else if strings.HasPrefix(input, "position") {
 			pos, err = Position(input)
