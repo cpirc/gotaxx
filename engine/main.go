@@ -10,7 +10,6 @@ func main() {
 	fmt.Println("Gotaxx Chess Engine")
 
 	var input string
-
 	for {
 		_, err := fmt.Scan(&input)
 		if err != nil {
