@@ -18,6 +18,13 @@ func TestNullmove(t *testing.T) {
 		t.Errorf("Nullmove string %s", movestr)
 	}
 
+	move, err := ataxx.NewMove("0000")
+	if err != nil {
+		t.Errorf("Error parsing nullmove %s", err)
+	} else if *move != ataxx.NULLMOVE {
+		t.Errorf("NewMove(\"0000\") nullmove mismatch")
+	}
+
 	for _, fen := range fens {
 		pos, _ := ataxx.NewPosition(fen)
 
