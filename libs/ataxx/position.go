@@ -24,6 +24,16 @@ func (pos *Position) Turn() int {
 	return pos.turn
 }
 
+// Us ...
+func (pos *Position) Us() Bitboard {
+	return pos.pieces[pos.turn]
+}
+
+// Them ...
+func (pos *Position) Them() Bitboard {
+	return pos.pieces[1-pos.turn]
+}
+
 // Set ...
 func (pos *Position) Set(sq Square, piece int) {
 	switch piece {
