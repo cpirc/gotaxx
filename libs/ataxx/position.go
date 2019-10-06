@@ -12,6 +12,7 @@ type Position struct {
 	halfmoves int
 }
 
+// Constructor ...
 func NewPosition(fen string) Position {
 	var position Position
 	position.SetFen(fen)
