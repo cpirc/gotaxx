@@ -8,17 +8,17 @@ func (pos *Position) MakeMove(move Move) {
 		return
 	}
 
-	bbTo := Bitboard{uint64(1) << move.to.data}
-	bbFrom := Bitboard{uint64(1) << move.from.data}
-	neighbours := bbTo.Singles().data
+	bbTo := Bitboard{uint64(1) << move.To.Data}
+	bbFrom := Bitboard{uint64(1) << move.From.Data}
+	neighbours := bbTo.Singles().Data
 
 	// Move our piece
-	pos.pieces[pos.turn].data ^= (bbTo.data | bbFrom.data)
+	pos.pieces[pos.turn].Data ^= (bbTo.Data | bbFrom.Data)
 
 	// Flip captured pieces
-	captured := pos.pieces[1-pos.turn].data & neighbours
-	pos.pieces[pos.turn].data ^= captured
-	pos.pieces[1-pos.turn].data ^= captured
+	captured := pos.pieces[1-pos.turn].Data & neighbours
+	pos.pieces[pos.turn].Data ^= captured
+	pos.pieces[1-pos.turn].Data ^= captured
 
 	// Flip turn
 	pos.turn = 1 - pos.turn

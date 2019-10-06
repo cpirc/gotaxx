@@ -7,8 +7,8 @@ import (
 
 // Move ...
 type Move struct {
-	from Square
-	to   Square
+	From Square
+	To   Square
 }
 
 // NULLMOVE ...
@@ -37,19 +37,19 @@ func NewMove(movestr string) (*Move, error) {
 
 // IsSingle ...
 func (move *Move) IsSingle() bool {
-	return move.from == move.to
+	return move.From == move.To
 }
 
 // IsDouble ...
 func (move *Move) IsDouble() bool {
-	return move.from != move.to
+	return move.From != move.To
 }
 
 func (move Move) String() string {
 	if move == NULLMOVE {
 		return "0000"
 	} else if move.IsSingle() {
-		return fmt.Sprintf("%c%c", 'a'+move.to.File(), '1'+move.to.Rank())
+		return fmt.Sprintf("%c%c", 'a'+move.To.File(), '1'+move.To.Rank())
 	}
-	return fmt.Sprintf("%c%c%c%c", 'a'+move.from.File(), '1'+move.from.Rank(), 'a'+move.to.File(), '1'+move.to.Rank())
+	return fmt.Sprintf("%c%c%c%c", 'a'+move.From.File(), '1'+move.From.Rank(), 'a'+move.To.File(), '1'+move.To.Rank())
 }

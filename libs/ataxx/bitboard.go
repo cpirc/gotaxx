@@ -24,91 +24,91 @@ const (
 
 // Bitboard ...
 type Bitboard struct {
-	data uint64
+	Data uint64
 }
 
 // Set ...
 func (bb *Bitboard) Set(sq Square) {
-	bb.data |= 1 << sq.data
+	bb.Data |= 1 << sq.Data
 }
 
 // Unset ...
 func (bb *Bitboard) Unset(sq Square) {
-	bb.data &= ^(1 << sq.data)
+	bb.Data &= ^(1 << sq.Data)
 }
 
 // Get ...
 func (bb *Bitboard) Get(sq Square) bool {
-	return bb.data&(1<<sq.data) != 0
+	return bb.Data&(1<<sq.Data) != 0
 }
 
 // Count ...
 func (bb *Bitboard) Count() int {
-	return bits.OnesCount64(bb.data)
+	return bits.OnesCount64(bb.Data)
 }
 
 // LSB ...
 func (bb *Bitboard) LSB() uint8 {
-	return uint8(bits.TrailingZeros64(bb.data))
+	return uint8(bits.TrailingZeros64(bb.Data))
 }
 
 // North ...
 func (bb *Bitboard) North() Bitboard {
-	return Bitboard{(bb.data << 7) & all}
+	return Bitboard{(bb.Data << 7) & all}
 }
 
 // South ...
 func (bb *Bitboard) South() Bitboard {
-	return Bitboard{bb.data >> 7}
+	return Bitboard{bb.Data >> 7}
 }
 
 // East ...
 func (bb *Bitboard) East() Bitboard {
-	return Bitboard{(bb.data << 1) & notFileA}
+	return Bitboard{(bb.Data << 1) & notFileA}
 }
 
 // West ...
 func (bb *Bitboard) West() Bitboard {
-	return Bitboard{(bb.data >> 1) & notFileG}
+	return Bitboard{(bb.Data >> 1) & notFileG}
 }
 
 // NorthEast ...
 func (bb *Bitboard) NorthEast() Bitboard {
-	return Bitboard{(bb.data << 8) & notFileA}
+	return Bitboard{(bb.Data << 8) & notFileA}
 }
 
 // NorthWest ...
 func (bb *Bitboard) NorthWest() Bitboard {
-	return Bitboard{(bb.data << 6) & notFileG}
+	return Bitboard{(bb.Data << 6) & notFileG}
 }
 
 // SouthEast ...
 func (bb *Bitboard) SouthEast() Bitboard {
-	return Bitboard{(bb.data >> 6) & notFileA}
+	return Bitboard{(bb.Data >> 6) & notFileA}
 }
 
 // SouthWest ...
 func (bb *Bitboard) SouthWest() Bitboard {
-	return Bitboard{(bb.data >> 8) & notFileG}
+	return Bitboard{(bb.Data >> 8) & notFileG}
 }
 
 // Singles ...
 func (bb *Bitboard) Singles() Bitboard {
 	return Bitboard{
-		bb.NorthEast().data |
-			bb.NorthWest().data |
-			bb.SouthEast().data |
-			bb.SouthWest().data |
-			bb.North().data |
-			bb.South().data |
-			bb.East().data |
-			bb.West().data}
+		bb.NorthEast().Data |
+			bb.NorthWest().Data |
+			bb.SouthEast().Data |
+			bb.SouthWest().Data |
+			bb.North().Data |
+			bb.South().Data |
+			bb.East().Data |
+			bb.West().Data}
 }
 
 // Doubles ...
 func (bb *Bitboard) Doubles() Bitboard {
 	var moves uint64 = 0
-	var asd = bb.data
+	var asd = bb.Data
 	moves |= (asd << 12) & notFileFG // North North West West
 	moves |= (asd << 13) & notFileG  // North North West
 	moves |= (asd << 14)             // North North

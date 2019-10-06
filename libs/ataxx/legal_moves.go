@@ -7,28 +7,28 @@ func (pos *Position) LegalMoves(moves *[]Move) {
 		return
 	}
 
-	legal := all ^ pos.pieces[0].data ^ pos.pieces[1].data ^ pos.gaps.data
+	legal := all ^ pos.pieces[0].Data ^ pos.pieces[1].Data ^ pos.gaps.Data
 
 	// Singles
-	singles := Bitboard{pos.pieces[pos.turn].Singles().data & legal}
-	for singles.data != 0 {
+	singles := Bitboard{pos.pieces[pos.turn].Singles().Data & legal}
+	for singles.Data != 0 {
 		sq := Square{singles.LSB()}
-		bb := uint64(1) << sq.data
-		singles.data ^= bb
+		bb := uint64(1) << sq.Data
+		singles.Data ^= bb
 		*moves = append(*moves, Move{sq, sq})
 	}
 
 	// Doubles
 	var copy = pos.pieces[pos.turn]
-	for copy.data != 0 {
+	for copy.Data != 0 {
 		fr := Square{copy.LSB()}
-		var bb = Bitboard{uint64(1) << fr.data}
-		copy.data ^= bb.data
+		var bb = Bitboard{uint64(1) << fr.Data}
+		copy.Data ^= bb.Data
 
-		doubles := Bitboard{bb.Doubles().data & legal}
-		for doubles.data != 0 {
+		doubles := Bitboard{bb.Doubles().Data & legal}
+		for doubles.Data != 0 {
 			to := Square{doubles.LSB()}
-			doubles.data ^= uint64(1) << to.data
+			doubles.Data ^= uint64(1) << to.Data
 			*moves = append(*moves, Move{fr, to})
 		}
 	}

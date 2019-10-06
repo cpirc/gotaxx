@@ -73,7 +73,7 @@ func (pos *Position) Get(sq Square) int {
 // Print ...
 func (pos Position) Print() {
 	for i := 42; i >= 0; i++ {
-		sq := Square{data: uint8(i)}
+		sq := Square{Data: uint8(i)}
 		switch pos.Get(sq) {
 		case 0:
 			fmt.Print("x ")

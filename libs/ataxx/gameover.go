@@ -8,14 +8,14 @@ func (pos *Position) Gameover() bool {
 	}
 
 	// No pieces left
-	if pos.pieces[0].data == 0 || pos.pieces[1].data == 0 {
+	if pos.pieces[0].Data == 0 || pos.pieces[1].Data == 0 {
 		return true
 	}
 
 	// No moves left
-	empty := all ^ pos.pieces[0].data ^ pos.pieces[1].data ^ pos.gaps.data
-	both := Bitboard{pos.pieces[0].data | pos.pieces[1].data}
-	if (both.Singles().data|both.Doubles().data)&empty != 0 {
+	empty := all ^ pos.pieces[0].Data ^ pos.pieces[1].Data ^ pos.gaps.Data
+	both := Bitboard{pos.pieces[0].Data | pos.pieces[1].Data}
+	if (both.Singles().Data|both.Doubles().Data)&empty != 0 {
 		return false
 	}
 

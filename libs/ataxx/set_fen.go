@@ -8,9 +8,9 @@ import (
 // SetFen ...
 func (pos *Position) SetFen(fen string) {
 	// Default
-	pos.pieces[0].data = 0
-	pos.pieces[1].data = 0
-	pos.gaps.data = 0
+	pos.pieces[0].Data = 0
+	pos.pieces[1].Data = 0
+	pos.gaps.Data = 0
 	pos.turn = 0
 	pos.halfmoves = 0
 
