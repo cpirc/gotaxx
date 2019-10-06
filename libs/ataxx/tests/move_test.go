@@ -14,7 +14,7 @@ func TestMove(t *testing.T) {
 	}
 
 	for _, fen := range fens {
-		pos := ataxx.NewPosition(fen)
+		pos, _ := ataxx.NewPosition(fen)
 
 		var moves []ataxx.Move
 		pos.LegalMoves(&moves)

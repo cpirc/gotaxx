@@ -14,7 +14,7 @@ func (pos Position) Perft(depth int) uint64 {
 
 	for i := 0; i < len(moves); i++ {
 		npos := pos
-		npos.Makemove(moves[i])
+		npos.MakeMove(moves[i])
 		nodes += npos.Perft(depth - 1)
 	}
 

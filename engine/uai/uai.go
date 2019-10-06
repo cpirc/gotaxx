@@ -1,6 +1,13 @@
 package uai
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/cpirc/gotaxx/libs/ataxx"
+)
 
 func PrintIdentity() {
 	fmt.Println("id name Gotaxx")
@@ -16,16 +23,30 @@ func Loop() {
 	PrintOptions()
 	fmt.Println("uciok")
 
-	var input string
+	pos, _ := ataxx.NewPosition(STARTPOS)
+	reader := bufio.NewReader(os.Stdin)
 	for {
-		_, err := fmt.Scan(&input)
+		input, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+		input = input[:len(input) - 1]
 
-		if input == "quit" {
+		if strings.HasPrefix(input, "quit") {
 			break
+		} else if strings.HasPrefix(input, "isready") {
+			IsReady()
+		} else if strings.HasPrefix(input, "position") {
+			pos, err = Position(input)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+		} else if strings.HasPrefix(input, "go") {
+			Go(*pos, input)
+		} else if input == "d" || input == "print" {
+			pos.Print()
 		} else {
 			fmt.Println("Unrecognized command!")
 		}

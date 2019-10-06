@@ -13,10 +13,10 @@ type Position struct {
 }
 
 // NewPosition ...
-func NewPosition(fen string) Position {
+func NewPosition(fen string) (*Position, error) {
 	var position Position
 	position.SetFen(fen)
-	return position
+	return &position, nil
 }
 
 // Turn ...
@@ -66,13 +66,13 @@ func (pos Position) Print() {
 		sq := Square{data: uint8(i)}
 		switch pos.Get(sq) {
 		case 0:
-			fmt.Print("x")
+			fmt.Print("x ")
 		case 1:
-			fmt.Print("o")
+			fmt.Print("o ")
 		case 2:
-			fmt.Print(" ")
+			fmt.Print("  ")
 		default:
-			fmt.Print("-")
+			fmt.Print("- ")
 		}
 
 		if i%7 == 6 {

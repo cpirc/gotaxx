@@ -1,7 +1,7 @@
 package ataxx
 
-// Makemove ...
-func (pos *Position) Makemove(move Move) {
+// MakeMove ...
+func (pos *Position) MakeMove(move Move) {
 	bbTo := Bitboard{uint64(1) << move.to.data}
 	bbFrom := Bitboard{uint64(1) << move.from.data}
 	neighbours := bbTo.Singles().data
