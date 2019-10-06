@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Gotaxx Chess Engine")
+	fmt.Println("Gotaxx Ataxx Engine")
 
 	var input string
 	for {
