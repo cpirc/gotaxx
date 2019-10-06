@@ -12,6 +12,12 @@ type Position struct {
 	halfmoves int
 }
 
+func NewPosition(fen string) Position {
+	var position Position
+	position.SetFen(fen)
+	return position
+}
+
 // Turn ...
 func (pos *Position) Turn() int {
 	return pos.turn
