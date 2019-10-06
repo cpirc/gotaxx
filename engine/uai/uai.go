@@ -19,7 +19,6 @@ func PrintOptions() {
 
 func Loop() {
 	PrintIdentity()
-	fmt.Println()
 	PrintOptions()
 	fmt.Println("uaiok")
 
