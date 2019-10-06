@@ -1,9 +1,11 @@
 package ataxx
 
+import "fmt"
+
 // Move ...
 type Move struct {
-	from uint8
-	to   uint8
+	from Square
+	to   Square
 }
 
 // IsSingle ...
