@@ -1,19 +1,28 @@
 package main
 
 import (
-	"golang.org/x/text/language"
-	"golang.org/x/text/message"
+	"fmt"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"github.com/cpirc/gotaxx/engine/uai"
 )
 
 func main() {
-	position := ataxx.NewPosition("x5o/7/7/7/7/7/o5x x 0")
+	fmt.Println("Gotaxx Chess Engine")
 
-	printer := message.NewPrinter(language.English)
-	printer.Println("Depth: Leaves")
-	for depth := 1; depth <= 6; depth++ {
-		numLeaves := position.Perft(depth)
-		printer.Printf("%d: %d\n", depth, numLeaves)
+	var input string
+
+	for {
+		_, err := fmt.Scan(&input)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		if input == "uai" {
+			uai.Loop()
+			break
+		} else {
+			fmt.Println("Unrecognized protocol!")
+		}
 	}
 }
