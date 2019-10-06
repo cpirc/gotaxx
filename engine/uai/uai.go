@@ -21,7 +21,7 @@ func Loop() {
 	PrintIdentity()
 	fmt.Println()
 	PrintOptions()
-	fmt.Println("uciok")
+	fmt.Println("uaiok")
 
 	pos, _ := ataxx.NewPosition(STARTPOS)
 	reader := bufio.NewReader(os.Stdin)
