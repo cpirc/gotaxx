@@ -1,8 +1,9 @@
 package test
 
 import (
-	"ataxx"
 	"testing"
+
+	"github.com/cpirc/gotaxx/libs/ataxx"
 )
 
 // TestFen ...
