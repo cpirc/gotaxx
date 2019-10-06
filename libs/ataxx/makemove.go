@@ -2,6 +2,12 @@ package ataxx
 
 // MakeMove ...
 func (pos *Position) MakeMove(move Move) {
+	// Nullmove
+	if move == NULLMOVE {
+		pos.turn = 1 - pos.turn
+		return
+	}
+
 	bbTo := Bitboard{uint64(1) << move.to.data}
 	bbFrom := Bitboard{uint64(1) << move.from.data}
 	neighbours := bbTo.Singles().data

@@ -2,6 +2,11 @@ package ataxx
 
 // CountMoves ...
 func (pos *Position) CountMoves() int {
+	// No moves if it's gameover
+	if pos.Gameover() == true {
+		return 0
+	}
+
 	numMoves := 0
 	legal := all ^ pos.pieces[0].data ^ pos.pieces[1].data ^ pos.gaps.data
 
@@ -18,6 +23,11 @@ func (pos *Position) CountMoves() int {
 
 		doubles := Bitboard{bb.Doubles().data & legal}
 		numMoves += doubles.Count()
+	}
+
+	// Nullmove
+	if numMoves == 0 {
+		numMoves++
 	}
 
 	return numMoves

@@ -2,6 +2,11 @@ package ataxx
 
 // LegalMoves ...
 func (pos *Position) LegalMoves(moves *[]Move) {
+	// Can't move if it's gameover
+	if pos.Gameover() == true {
+		return
+	}
+
 	legal := all ^ pos.pieces[0].data ^ pos.pieces[1].data ^ pos.gaps.data
 
 	// Singles
@@ -26,5 +31,10 @@ func (pos *Position) LegalMoves(moves *[]Move) {
 			doubles.data ^= uint64(1) << to.data
 			*moves = append(*moves, Move{fr, to})
 		}
+	}
+
+	// Nullmove
+	if len(*moves) == 0 {
+		*moves = append(*moves, NULLMOVE)
 	}
 }

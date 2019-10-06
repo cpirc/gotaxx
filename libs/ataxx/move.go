@@ -11,9 +11,14 @@ type Move struct {
 	to   Square
 }
 
+// NULLMOVE ...
+var NULLMOVE = Move{Square{49}, Square{49}}
+
 // NewMove ...
 func NewMove(movestr string) (*Move, error) {
-	if len(movestr) == 2 {
+	if movestr == "0000" {
+		return &NULLMOVE, nil
+	} else if len(movestr) == 2 {
 		f := uint8(movestr[0] - 'a')
 		r := uint8(movestr[1] - '1')
 		to := Square{r*7 + f}
@@ -41,7 +46,9 @@ func (move *Move) IsDouble() bool {
 }
 
 func (move Move) String() string {
-	if move.IsSingle() {
+	if move == NULLMOVE {
+		return "0000"
+	} else if move.IsSingle() {
 		return fmt.Sprintf("%c%c", 'a'+move.to.File(), '1'+move.to.Rank())
 	}
 	return fmt.Sprintf("%c%c%c%c", 'a'+move.from.File(), '1'+move.from.Rank(), 'a'+move.to.File(), '1'+move.to.Rank())
