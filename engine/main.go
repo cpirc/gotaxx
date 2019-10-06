@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	"github.com/cpirc/gotaxx/engine/uai"
 )
@@ -9,13 +11,14 @@ import (
 func main() {
 	fmt.Println("Gotaxx Ataxx Engine")
 
-	var input string
+	reader := bufio.NewReader(os.Stdin)
 	for {
-		_, err := fmt.Scan(&input)
+		input, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+		input = input[:len(input) - 1]
 
 		if input == "uai" {
 			uai.Loop()
