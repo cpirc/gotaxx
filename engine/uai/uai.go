@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/cpirc/gotaxx/engine/options"
 	"github.com/cpirc/gotaxx/libs/ataxx"
 )
 
@@ -15,6 +16,18 @@ func PrintIdentity() {
 }
 
 func PrintOptions() {
+	for _, option := range options.OPTIONS {
+		fmt.Print("option name ", option.Name(), " type ", option.Type(), " ")
+		comboOption, isComboOption := option.(options.ComboOption)
+		if isComboOption {
+			fmt.Print("default ", comboOption.Default(), " ")
+			for _, choice := range comboOption.Choices() {
+				fmt.Print("var ", choice, " ")
+			}
+			break
+		}
+	}
+	fmt.Println()
 }
 
 func Loop() {
@@ -44,6 +57,8 @@ func Loop() {
 			}
 		} else if strings.HasPrefix(input, "go") {
 			Go(*pos, input)
+		} else if strings.HasPrefix(input, "setoption") {
+			SetOption(input)
 		} else if input == "d" || input == "print" {
 			pos.Print()
 		} else {
