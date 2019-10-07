@@ -19,8 +19,7 @@ func MostCaptures(pos ataxx.Position) ataxx.Move {
 	bestScore := -1
 
 	for _, move := range moves {
-		sq := ataxx.Square{Data: move.To.Data}
-		bb := ataxx.Bitboard{Data: 1 << sq.Data}
+		bb := ataxx.Bitboard{Data: 1 << move.To.Data}
 		captured := ataxx.Bitboard{Data: bb.Singles().Data & pos.Them().Data}
 		score := captured.Count()
 
