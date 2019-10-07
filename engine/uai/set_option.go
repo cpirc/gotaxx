@@ -15,20 +15,10 @@ func SetOption(input string) {
 		return
 	}
 
-	option, err := options.FindByName(parts[2])
+	name, value := parts[2], parts[4]
+
+	err := options.SetCombo(name, value)
 	if err != nil {
 		fmt.Println(err)
-		return
-	}
-
-	comboOption, isComboOption := option.(options.ComboOption)
-	if isComboOption {
-		err := comboOption.SetValue(parts[4])
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println("value set to", parts[4])
-		}
-		return
 	}
 }

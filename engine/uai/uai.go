@@ -13,19 +13,16 @@ import (
 func PrintIdentity() {
 	fmt.Println("id name Gotaxx")
 	fmt.Println("id author kz04px mkchan")
+	fmt.Println()
 }
 
 func PrintOptions() {
-	for _, option := range options.OPTIONS {
-		fmt.Print("option name ", option.Name(), " type ", option.Type(), " ")
-		comboOption, isComboOption := option.(options.ComboOption)
-		if isComboOption {
-			fmt.Print("default ", comboOption.Default(), " ")
-			for _, choice := range comboOption.Choices() {
-				fmt.Print("var ", choice, " ")
-			}
-			break
+	for _, option := range options.ComboOptions {
+		fmt.Print("option name ", option.Name(), " type ", option.Type(), " default ", option.Default(), " ")
+		for _, choice := range option.Choices() {
+			fmt.Print("var ", choice, " ")
 		}
+		fmt.Println()
 	}
 	fmt.Println()
 }
