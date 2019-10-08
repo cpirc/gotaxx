@@ -8,8 +8,7 @@ import (
 
 // MostCaptures ...
 func MostCaptures(pos ataxx.Position) ataxx.Move {
-	var moves []ataxx.Move
-	pos.LegalMoves(&moves)
+	moves := pos.LegalMoves()
 
 	if len(moves) <= 0 || moves[0] == ataxx.NULLMOVE {
 		return ataxx.NULLMOVE

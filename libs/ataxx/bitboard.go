@@ -38,62 +38,62 @@ func (bb *Bitboard) Unset(sq Square) {
 }
 
 // Get ...
-func (bb *Bitboard) Get(sq Square) bool {
+func (bb Bitboard) Get(sq Square) bool {
 	return bb.Data&(1<<sq.Data) != 0
 }
 
 // Count ...
-func (bb *Bitboard) Count() int {
+func (bb Bitboard) Count() int {
 	return bits.OnesCount64(bb.Data)
 }
 
 // LSB ...
-func (bb *Bitboard) LSB() uint8 {
+func (bb Bitboard) LSB() uint8 {
 	return uint8(bits.TrailingZeros64(bb.Data))
 }
 
 // North ...
-func (bb *Bitboard) North() Bitboard {
+func (bb Bitboard) North() Bitboard {
 	return Bitboard{(bb.Data << 7) & all}
 }
 
 // South ...
-func (bb *Bitboard) South() Bitboard {
+func (bb Bitboard) South() Bitboard {
 	return Bitboard{bb.Data >> 7}
 }
 
 // East ...
-func (bb *Bitboard) East() Bitboard {
+func (bb Bitboard) East() Bitboard {
 	return Bitboard{(bb.Data << 1) & notFileA}
 }
 
 // West ...
-func (bb *Bitboard) West() Bitboard {
+func (bb Bitboard) West() Bitboard {
 	return Bitboard{(bb.Data >> 1) & notFileG}
 }
 
 // NorthEast ...
-func (bb *Bitboard) NorthEast() Bitboard {
+func (bb Bitboard) NorthEast() Bitboard {
 	return Bitboard{(bb.Data << 8) & notFileA}
 }
 
 // NorthWest ...
-func (bb *Bitboard) NorthWest() Bitboard {
+func (bb Bitboard) NorthWest() Bitboard {
 	return Bitboard{(bb.Data << 6) & notFileG}
 }
 
 // SouthEast ...
-func (bb *Bitboard) SouthEast() Bitboard {
+func (bb Bitboard) SouthEast() Bitboard {
 	return Bitboard{(bb.Data >> 6) & notFileA}
 }
 
 // SouthWest ...
-func (bb *Bitboard) SouthWest() Bitboard {
+func (bb Bitboard) SouthWest() Bitboard {
 	return Bitboard{(bb.Data >> 8) & notFileG}
 }
 
 // Singles ...
-func (bb *Bitboard) Singles() Bitboard {
+func (bb Bitboard) Singles() Bitboard {
 	return Bitboard{
 		bb.NorthEast().Data |
 			bb.NorthWest().Data |
@@ -106,7 +106,7 @@ func (bb *Bitboard) Singles() Bitboard {
 }
 
 // Doubles ...
-func (bb *Bitboard) Doubles() Bitboard {
+func (bb Bitboard) Doubles() Bitboard {
 	var moves uint64 = 0
 	var asd = bb.Data
 	moves |= (asd << 12) & notFileFG // North North West West

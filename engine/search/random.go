@@ -8,8 +8,7 @@ import (
 
 // Random ...
 func Random(pos ataxx.Position) ataxx.Move {
-	var moves []ataxx.Move
-	pos.LegalMoves(&moves)
+	moves := pos.LegalMoves()
 
 	if len(moves) <= 0 {
 		return ataxx.NULLMOVE

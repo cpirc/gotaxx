@@ -9,8 +9,7 @@ func (pos Position) Perft(depth int) uint64 {
 	}
 
 	var nodes uint64 = 0
-	moves := make([]Move, 0, 200)
-	pos.LegalMoves(&moves)
+	moves := pos.LegalMoves()
 
 	for i := 0; i < len(moves); i++ {
 		npos := pos

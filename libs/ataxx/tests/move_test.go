@@ -19,8 +19,7 @@ func TestMove(t *testing.T) {
 	for _, fen := range fens {
 		pos, _ := ataxx.NewPosition(fen)
 
-		var moves []ataxx.Move
-		pos.LegalMoves(&moves)
+		moves := pos.LegalMoves()
 
 		// CountMove
 		if pos.CountMoves() != len(moves) {

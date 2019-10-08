@@ -28,8 +28,7 @@ func TestNullmove(t *testing.T) {
 	for _, fen := range fens {
 		pos, _ := ataxx.NewPosition(fen)
 
-		var moves []ataxx.Move
-		pos.LegalMoves(&moves)
+		moves := pos.LegalMoves()
 
 		if len(moves) != 1 {
 			t.Errorf("Position %s expected 1 move, found %d moves", fen, len(moves))

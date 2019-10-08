@@ -13,7 +13,6 @@ import (
 func PrintIdentity() {
 	fmt.Println("id name Gotaxx")
 	fmt.Println("id author kz04px mkchan")
-	fmt.Println()
 }
 
 func PrintOptions() {
@@ -24,12 +23,13 @@ func PrintOptions() {
 		}
 		fmt.Println()
 	}
-	fmt.Println()
 }
 
 func Loop() {
 	PrintIdentity()
+	fmt.Println()
 	PrintOptions()
+	fmt.Println()
 	fmt.Println("uaiok")
 
 	pos, _ := ataxx.NewPosition(STARTPOS)
@@ -56,6 +56,10 @@ func Loop() {
 			Go(*pos, input)
 		} else if strings.HasPrefix(input, "setoption") {
 			SetOption(input)
+		} else if input == "options" {
+			PrintOptions()
+		} else if strings.HasPrefix(input, "perft") {
+			Perft(*pos, input)
 		} else if input == "d" || input == "print" {
 			pos.Print()
 		} else {
