@@ -32,6 +32,7 @@ func Loop() {
 	fmt.Println()
 	fmt.Println("uaiok")
 
+	var stop chan struct{}
 	pos, _ := ataxx.NewPosition(STARTPOS)
 	reader := bufio.NewReader(os.Stdin)
 	for {
@@ -53,7 +54,10 @@ func Loop() {
 				continue
 			}
 		} else if strings.HasPrefix(input, "go") {
-			Go(*pos, input)
+			stop = make(chan struct{})
+			go func() {
+				Go(*pos, input, stop)
+			}()
 		} else if strings.HasPrefix(input, "setoption") {
 			SetOption(input)
 		} else if input == "options" {
@@ -62,6 +66,8 @@ func Loop() {
 			Perft(*pos, input)
 		} else if input == "d" || input == "print" {
 			pos.Print()
+		} else if input == "stop" {
+			close(stop)
 		} else {
 			fmt.Println("Unrecognized command!")
 		}

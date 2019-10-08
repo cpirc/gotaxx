@@ -67,8 +67,8 @@ func SetCombo(name string, value string) error {
 var ComboOptions = [...]ComboOption{
 	{
 		name:         "SearchType",
-		value:        "Random",
-		defaultValue: "Random",
-		choices:      []string{"Random", "MostCaptures"},
+		value:        "AlphaBeta",
+		defaultValue: "AlphaBeta",
+		choices:      []string{"AlphaBeta", "MostCaptures", "Random"},
 	},
 }
