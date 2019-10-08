@@ -71,6 +71,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 		childPos.MakeMove(move)
 
 		result := AlphaBetaImpl(childPos, -beta, -alpha, depth-1, ply+1, stop)
+		result.score = -result.score
 
 		if ply > 0 {
 			select {
