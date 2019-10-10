@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/cpirc/gotaxx/engine/options"
 	"github.com/cpirc/gotaxx/libs/ataxx"
@@ -33,6 +34,13 @@ func Loop() {
 	fmt.Println("uaiok")
 
 	var stop chan struct{}
+	var stopController sync.Once
+	searchStopper := func() {
+		stopController.Do(func() {
+			close(stop)
+		})
+	}
+
 	pos, _ := ataxx.NewPosition(STARTPOS)
 	reader := bufio.NewReader(os.Stdin)
 	for {
@@ -41,7 +49,7 @@ func Loop() {
 			fmt.Println(err)
 			return
 		}
-		input = input[:len(input) - 1]
+		input = input[:len(input)-1]
 
 		if input == "quit" {
 			break
@@ -55,8 +63,9 @@ func Loop() {
 			}
 		} else if strings.HasPrefix(input, "go") {
 			stop = make(chan struct{})
+			stopController = sync.Once{}
 			go func() {
-				Go(*pos, input, stop)
+				Go(*pos, input, stop, searchStopper)
 			}()
 		} else if strings.HasPrefix(input, "setoption") {
 			SetOption(input)
@@ -67,7 +76,7 @@ func Loop() {
 		} else if input == "d" || input == "print" {
 			pos.Print()
 		} else if input == "stop" {
-			close(stop)
+			searchStopper()
 		} else {
 			fmt.Println("Unrecognized command!")
 		}
