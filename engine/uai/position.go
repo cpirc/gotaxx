@@ -23,10 +23,10 @@ func Position(input string) (*ataxx.Position, error) {
 			return "", -1, errors.New("input must start with 'position fen' or 'position startpos'")
 		}
 
-		if len(parts) < 5 {
+		if len(parts) < 6 {
 			return "", -1, errors.New("incomplete position string")
 		}
-		return strings.Join(parts[2:5], " "), 5, nil
+		return strings.Join(parts[2:6], " "), 6, nil
 	}()
 	if err != nil {
 		return nil, err
