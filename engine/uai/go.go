@@ -19,12 +19,12 @@ func Go(pos ataxx.Position, input string, stop chan struct{}, searchStopper func
 	for i := 1; i < len(parts); i += 2 {
 		part := parts[i]
 		if part == "movetime" {
-			movetimeMillies, err := strconv.Atoi(parts[i+1])
+			movetimeMillis, err := strconv.Atoi(parts[i+1])
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
-			movetime = time.Duration(movetimeMillies) * time.Millisecond
+			movetime = time.Duration(movetimeMillis) * time.Millisecond
 		}
 	}
 
