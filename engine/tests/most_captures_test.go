@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
-	"github.com/cpirc/gotaxx/engine/search"
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/engine/search"
+	"gotaxx/libs/ataxx"
 )
 
 type mostCapturesTest struct {

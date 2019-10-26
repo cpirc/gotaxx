@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cpirc/gotaxx/engine/options"
+	"gotaxx/engine/options"
 )
 
 func SetOption(input string) {

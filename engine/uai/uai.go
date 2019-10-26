@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cpirc/gotaxx/engine/options"
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/engine/options"
+	"gotaxx/libs/ataxx"
 )
 
 func PrintIdentity() {

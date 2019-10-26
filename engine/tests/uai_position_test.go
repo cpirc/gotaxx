@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/cpirc/gotaxx/engine/uai"
+	"gotaxx/engine/uai"
 )
 
 type positionTest struct {

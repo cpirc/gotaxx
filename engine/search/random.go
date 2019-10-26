@@ -3,7 +3,7 @@ package search
 import (
 	"math/rand"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/libs/ataxx"
 )
 
 // Random ...

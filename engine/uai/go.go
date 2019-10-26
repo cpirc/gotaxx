@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cpirc/gotaxx/engine/options"
-	"github.com/cpirc/gotaxx/engine/search"
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/engine/options"
+	"gotaxx/engine/search"
+	"gotaxx/libs/ataxx"
 )
 
 func Go(pos ataxx.Position, input string, stop chan struct{}, searchStopper func()) {

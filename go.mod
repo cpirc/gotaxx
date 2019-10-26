@@ -1,3 +1,3 @@
-module github.com/cpirc/gotaxx
+module gotaxx
 
 go 1.13

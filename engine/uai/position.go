@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/libs/ataxx"
 )
 
 const STARTPOS = "x5o/7/7/7/7/7/o5x x 0"
@@ -42,10 +42,10 @@ func Position(input string) (*ataxx.Position, error) {
 	}
 	if parts[movesIdx] != "moves" {
 		return nil, errors.New("expected string 'moves'")
-	} else if movesIdx + 1 >= len(parts) {
+	} else if movesIdx+1 >= len(parts) {
 		return nil, errors.New("expected moves after string 'moves'")
 	}
-	for _, moveStr := range parts[movesIdx + 1:] {
+	for _, moveStr := range parts[movesIdx+1:] {
 		move, err := ataxx.NewMove(moveStr)
 		if err != nil {
 			return nil, fmt.Errorf("illegal move %s", moveStr)

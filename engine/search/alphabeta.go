@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cpirc/gotaxx/engine/eval"
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/engine/eval"
+	"gotaxx/libs/ataxx"
 )
 
 type Result struct {

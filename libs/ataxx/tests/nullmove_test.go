@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/libs/ataxx"
 )
 
 // TestNullmove ...

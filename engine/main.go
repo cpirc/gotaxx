@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cpirc/gotaxx/engine/uai"
+	"gotaxx/engine/uai"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		input = input[:len(input) - 1]
+		input = input[:len(input)-1]
 
 		if input == "uai" {
 			uai.Loop()

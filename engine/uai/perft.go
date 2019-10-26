@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/libs/ataxx"
 )
 
 func Perft(pos ataxx.Position, input string) {

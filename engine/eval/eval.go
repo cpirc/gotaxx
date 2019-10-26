@@ -1,6 +1,6 @@
 package eval
 
-import "github.com/cpirc/gotaxx/libs/ataxx"
+import "gotaxx/libs/ataxx"
 
 var Material = 1000
 

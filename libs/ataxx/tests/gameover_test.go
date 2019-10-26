@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/cpirc/gotaxx/libs/ataxx"
+	"gotaxx/libs/ataxx"
 )
 
 type gameoverTest struct {
