@@ -2,37 +2,15 @@ package options
 
 import "errors"
 
-const ComboOptionType = "combo"
-
 type ComboOption struct {
-	name         string
-	value        string
-	defaultValue string
-	choices      []string
-}
-
-func (s ComboOption) Name() string {
-	return s.name
-}
-
-func (s ComboOption) Type() string {
-	return ComboOptionType
-}
-
-func (s ComboOption) Default() string {
-	return s.defaultValue
-}
-
-func (s *ComboOption) Value() string {
-	return s.value
-}
-
-func (s ComboOption) Choices() []string {
-	return s.choices
+	Name         string
+	Value        string
+	DefaultValue string
+	Choices      []string
 }
 
 func (s ComboOption) IsValidChoice(value string) bool {
-	for _, choice := range s.choices {
+	for _, choice := range s.Choices {
 		if choice == value {
 			return true
 		}
@@ -42,8 +20,8 @@ func (s ComboOption) IsValidChoice(value string) bool {
 
 func GetCombo(name string) (string, error) {
 	for _, option := range ComboOptions {
-		if name == option.Name() {
-			return option.value, nil
+		if name == option.Name {
+			return option.Value, nil
 		}
 	}
 	return "", errors.New("could not find option " + name)
@@ -52,9 +30,9 @@ func GetCombo(name string) (string, error) {
 func SetCombo(name string, value string) error {
 	for i := 0; i < len(ComboOptions); i++ {
 		option := &ComboOptions[i]
-		if name == option.Name() {
+		if name == option.Name {
 			if option.IsValidChoice(value) {
-				option.value = value
+				option.Value = value
 				return nil
 			} else {
 				return errors.New("value " + value + " not a valid choice")
@@ -66,9 +44,9 @@ func SetCombo(name string, value string) error {
 
 var ComboOptions = [...]ComboOption{
 	{
-		name:         "SearchType",
-		value:        "AlphaBeta",
-		defaultValue: "AlphaBeta",
-		choices:      []string{"AlphaBeta", "MostCaptures", "Random"},
+		Name:         "SearchType",
+		Value:        "AlphaBeta",
+		DefaultValue: "AlphaBeta",
+		Choices:      []string{"AlphaBeta", "MostCaptures", "Random"},
 	},
 }

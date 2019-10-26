@@ -18,11 +18,15 @@ func PrintIdentity() {
 
 func PrintOptions() {
 	for _, option := range options.ComboOptions {
-		fmt.Print("option name ", option.Name(), " type ", option.Type(), " default ", option.Default(), " ")
-		for _, choice := range option.Choices() {
+		fmt.Print("option name ", option.Name, " type combo default ", option.DefaultValue, " ")
+		for _, choice := range option.Choices {
 			fmt.Print("var ", choice, " ")
 		}
 		fmt.Println()
+	}
+
+	for _, option := range options.SpinOptions {
+		fmt.Println("option name", option.Name, "type spin default", option.DefaultValue, "min", option.Min, "max", option.Max)
 	}
 }
 

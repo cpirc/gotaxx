@@ -2,6 +2,7 @@ package uai
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"gotaxx/engine/options"
@@ -19,6 +20,16 @@ func SetOption(input string) {
 
 	err := options.SetCombo(name, value)
 	if err != nil {
+		fmt.Println(err)
+	}
+
+	valueInt, err := strconv.Atoi(value)
+	if err == nil {
+		err = options.SetSpin(name, valueInt)
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
 		fmt.Println(err)
 	}
 }
