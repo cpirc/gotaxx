@@ -93,7 +93,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 				pv = append(pv, result.pv...)
 			}
 		}
-		if bestScore > beta {
+		if bestScore >= beta {
 			break
 		}
 	}
