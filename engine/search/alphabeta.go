@@ -35,7 +35,7 @@ IdLoop:
 		}
 
 		bestMove = latestResult.pv[0]
-		nps := float64(nodeCount) * float64(timeTaken.Milliseconds()) / 1000.0
+		nps := float64(nodeCount) * 1000.0 / float64(timeTaken.Milliseconds())
 		fmt.Printf("info score %d depth %d time %d nodes %d nps %d moves", latestResult.score, depth, timeTaken.Milliseconds(), nodeCount, uint64(nps))
 		for _, move := range latestResult.pv {
 			fmt.Print(" ", move.String())
