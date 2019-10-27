@@ -62,9 +62,9 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 	ttEntry := tt.TranspositionTable.Probe(pos.HashKey())
 	if ttEntry.Key() == pos.HashKey() {
 		if ttEntry.Depth() >= depth &&
-			((ttEntry.Flag() == tt.FLAG_LOWER && ttEntry.Score() >= beta) ||
-				(ttEntry.Flag() == tt.FLAG_UPPER && ttEntry.Score() <= alpha) ||
-				(ttEntry.Flag() == tt.FLAG_EXACT)) {
+			((ttEntry.Flag() == tt.FlagLower && ttEntry.Score() >= beta) ||
+				(ttEntry.Flag() == tt.FlagUpper && ttEntry.Score() <= alpha) ||
+				(ttEntry.Flag() == tt.FlagExact)) {
 			return Result{ttEntry.Score(), []ataxx.Move{ttEntry.Move()}}
 		}
 	}
@@ -112,11 +112,11 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 	}
 
 	if bestScore <= alpha {
-		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_UPPER, depth, bestScore, pos.HashKey()))
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FlagUpper, depth, bestScore, pos.HashKey()))
 	} else if bestScore < beta {
-		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_EXACT, depth, bestScore, pos.HashKey()))
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FlagExact, depth, bestScore, pos.HashKey()))
 	} else {
-		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_LOWER, depth, bestScore, pos.HashKey()))
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FlagLower, depth, bestScore, pos.HashKey()))
 	}
 
 	return Result{bestScore, pv}

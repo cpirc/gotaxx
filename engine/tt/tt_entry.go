@@ -7,9 +7,9 @@ import (
 type Flag int8
 
 const (
-	FLAG_LOWER = 0
-	FLAG_UPPER = 1
-	FLAG_EXACT = 2
+	FlagLower = 0
+	FlagUpper = 1
+	FlagExact = 2
 )
 
 type Entry struct {
