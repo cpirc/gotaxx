@@ -3,6 +3,7 @@ package options
 import (
 	"errors"
 
+	"gotaxx/engine/perft_tt"
 	"gotaxx/engine/tt"
 )
 
@@ -32,6 +33,9 @@ func SetSpin(name string, value int) error {
 				if option.Name == "Hash" {
 					tt.TranspositionTable.Resize(option.Value)
 					tt.TranspositionTable.Clear()
+				} else if option.Name == "PerftHash" {
+					perft_tt.PerftTranspositionTable.Resize(option.Value)
+					perft_tt.PerftTranspositionTable.Clear()
 				}
 
 				return nil
@@ -48,6 +52,12 @@ var SpinOptions = [...]SpinOption{
 		Name:         "Hash",
 		Value:        128,
 		DefaultValue: 128,
+		Min:          1,
+		Max:          1048576,
+	}, {
+		Name:         "PerftHash",
+		Value:        1,
+		DefaultValue: 1,
 		Min:          1,
 		Max:          1048576,
 	},

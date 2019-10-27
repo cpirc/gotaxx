@@ -10,12 +10,24 @@ type Position struct {
 	gaps      Bitboard
 	turn      int
 	halfmoves int
+	hashKey   uint64
 }
 
 // NewPosition ...
 func NewPosition(fen string) (*Position, error) {
 	var position Position
 	position.SetFen(fen)
+
+	position.hashKey = 0
+	for color, pieceBB := range position.pieces {
+		for pieceBB.Data != 0 {
+			square := pieceBB.LSB()
+			pieceBB.Data ^= uint64(1) << square
+			position.hashKey ^= SquareKeys[color][square]
+		}
+	}
+	position.hashKey ^= TurnKey
+
 	return &position, nil
 }
 
@@ -90,4 +102,6 @@ func (pos Position) Print() {
 			i -= 14
 		}
 	}
+
+	fmt.Println(pos.hashKey)
 }

@@ -41,6 +41,55 @@ IdLoop:
 	return bestMove
 }
 
+func QSearchImpl(pos ataxx.Position, alpha int, beta int, ply int, stop chan struct{}) int {
+	staticEval := eval.Eval(&pos)
+
+	if ply > 0 {
+		select {
+		case <-stop:
+			return staticEval
+		default:
+		}
+
+		if ply >= 128 {
+			return staticEval
+		}
+	}
+
+	if staticEval >= beta {
+		return staticEval
+	}
+
+	moves := pos.CaptureMoves()
+	if len(moves) <= 0 || moves[0] == ataxx.NULLMOVE {
+		return staticEval
+	}
+
+	for _, move := range moves {
+		childPos := pos
+		childPos.MakeMove(move)
+
+		score := -QSearchImpl(childPos, -beta, -alpha, ply+1, stop)
+
+		if ply > 0 {
+			select {
+			case <-stop:
+				return eval.Eval(&pos)
+			default:
+			}
+		}
+
+		if score > alpha {
+			alpha = score
+		}
+		if alpha >= beta {
+			break
+		}
+	}
+
+	return alpha
+}
+
 func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, stop chan struct{}) Result {
 	if depth <= 0 {
 		return Result{eval.Eval(&pos), nil}

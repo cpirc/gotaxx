@@ -29,8 +29,8 @@ func (tt Entry) Flag() Flag {
 	return Flag(((tt.data ^ tt.key) & 0x30000) >> 16)
 }
 
-func (tt Entry) Depth() uint8 {
-	return uint8(((tt.data ^ tt.key) & 0x1fc0000) >> 18)
+func (tt Entry) Depth() int {
+	return int(((tt.data ^ tt.key) & 0x1fc0000) >> 18)
 }
 
 func (tt Entry) Score() int {

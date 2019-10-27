@@ -28,10 +28,10 @@ func (tt *TT) Insert(entry Entry) {
 }
 
 func (tt *TT) Probe(key uint64) Entry {
-	index := key & uint64(len(tt.Entries))
+	index := key % uint64(len(tt.Entries))
 	return tt.Entries[index]
 }
 
 var TranspositionTable = TT{
-	Entries: make([]Entry, 128),
+	Entries: make([]Entry, 128*1024*1024/int(unsafe.Sizeof(Entry{}))),
 }

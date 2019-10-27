@@ -77,6 +77,8 @@ func Loop() {
 			PrintOptions()
 		} else if strings.HasPrefix(input, "perft") {
 			Perft(*pos, input)
+		} else if strings.HasPrefix(input, "hperft") {
+			HPerft(*pos, input)
 		} else if input == "d" || input == "print" {
 			pos.Print()
 		} else if input == "stop" {
