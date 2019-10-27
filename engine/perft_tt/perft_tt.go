@@ -34,5 +34,5 @@ func (tt *PerftTT) Probe(key uint64) PerftEntry {
 }
 
 var PerftTranspositionTable = PerftTT{
-	Entries: make([]PerftEntry, 128*1024*1024/int(unsafe.Sizeof(PerftEntry{}))),
+	Entries: make([]PerftEntry, 1*1024*1024/int(unsafe.Sizeof(PerftEntry{}))),
 }
