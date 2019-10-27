@@ -1,23 +1,18 @@
 package tt
 
 import (
-	"fmt"
 	"unsafe"
 )
 
 type TT struct {
-	Entries []TTEntry
+	Entries []Entry
 }
 
 func (tt *TT) Resize(sizeMB int) {
-	fmt.Println("DesiredSize", sizeMB)
-	var ttEntry TTEntry
+	var ttEntry Entry
 	entrySize := int(unsafe.Sizeof(ttEntry))
-	fmt.Println("EntrySize", entrySize)
 	numEntries := sizeMB * 1024 * 1024 / entrySize
-	fmt.Println("NumEntries", numEntries)
-	tt.Entries = make([]TTEntry, numEntries)
-	fmt.Println(len(tt.Entries))
+	tt.Entries = make([]Entry, numEntries)
 }
 
 func (tt *TT) Clear() {
@@ -27,16 +22,16 @@ func (tt *TT) Clear() {
 	}
 }
 
-func (tt *TT) Insert(entry TTEntry) {
+func (tt *TT) Insert(entry Entry) {
 	index := entry.key % uint64(len(tt.Entries))
 	tt.Entries[index] = entry
 }
 
-func (tt *TT) Probe(key uint64) TTEntry {
+func (tt *TT) Probe(key uint64) Entry {
 	index := key & uint64(len(tt.Entries))
 	return tt.Entries[index]
 }
 
 var TranspositionTable = TT{
-	Entries: make([]TTEntry, 128),
+	Entries: make([]Entry, 128),
 }
