@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"gotaxx/engine/eval"
+	"gotaxx/engine/tt"
 	"gotaxx/libs/ataxx"
 )
 
@@ -41,55 +42,6 @@ IdLoop:
 	return bestMove
 }
 
-func QSearchImpl(pos ataxx.Position, alpha int, beta int, ply int, stop chan struct{}) int {
-	staticEval := eval.Eval(&pos)
-
-	if ply > 0 {
-		select {
-		case <-stop:
-			return staticEval
-		default:
-		}
-
-		if ply >= 128 {
-			return staticEval
-		}
-	}
-
-	if staticEval >= beta {
-		return staticEval
-	}
-
-	moves := pos.CaptureMoves()
-	if len(moves) <= 0 || moves[0] == ataxx.NULLMOVE {
-		return staticEval
-	}
-
-	for _, move := range moves {
-		childPos := pos
-		childPos.MakeMove(move)
-
-		score := -QSearchImpl(childPos, -beta, -alpha, ply+1, stop)
-
-		if ply > 0 {
-			select {
-			case <-stop:
-				return eval.Eval(&pos)
-			default:
-			}
-		}
-
-		if score > alpha {
-			alpha = score
-		}
-		if alpha >= beta {
-			break
-		}
-	}
-
-	return alpha
-}
-
 func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, stop chan struct{}) Result {
 	if depth <= 0 {
 		return Result{eval.Eval(&pos), nil}
@@ -107,6 +59,16 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 		}
 	}
 
+	ttEntry := tt.TranspositionTable.Probe(pos.HashKey())
+	if ttEntry.Key() == pos.HashKey() {
+		if ttEntry.Depth() >= depth &&
+			((ttEntry.Flag() == tt.FLAG_LOWER && ttEntry.Score() >= beta) ||
+				(ttEntry.Flag() == tt.FLAG_UPPER && ttEntry.Score() <= alpha) ||
+				(ttEntry.Flag() == tt.FLAG_EXACT)) {
+			return Result{ttEntry.Score(), []ataxx.Move{ttEntry.Move()}}
+		}
+	}
+
 	moves := pos.LegalMoves()
 
 	if len(moves) <= 0 || moves[0] == ataxx.NULLMOVE {
@@ -114,6 +76,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 	}
 
 	var pv []ataxx.Move
+	var bestMove ataxx.Move
 	bestScore := -30000
 	for _, move := range moves {
 		childPos := pos
@@ -132,6 +95,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 
 		if result.score > bestScore {
 			bestScore = result.score
+			bestMove = move
 		}
 		if bestScore > alpha {
 			alpha = bestScore
@@ -145,6 +109,14 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 		if bestScore >= beta {
 			break
 		}
+	}
+
+	if bestScore <= alpha {
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_UPPER, depth, bestScore, pos.HashKey()))
+	} else if bestScore < beta {
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_EXACT, depth, bestScore, pos.HashKey()))
+	} else {
+		tt.TranspositionTable.Insert(tt.NewEntry(bestMove, tt.FLAG_LOWER, depth, bestScore, pos.HashKey()))
 	}
 
 	return Result{bestScore, pv}

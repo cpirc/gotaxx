@@ -41,8 +41,10 @@ func (tt Entry) Key() uint64 {
 	return tt.key
 }
 
-func (tt *Entry) Set(move ataxx.Move, flag Flag, depth uint8, score int, key uint64) {
-	tt.key = key
-	tt.data = uint64(move.From.Data) | (uint64(move.To.Data) << 8) | (uint64(flag) << 16) | (uint64(depth) << 18) | (uint64(score) << 25)
-	tt.data ^= key
+func NewEntry(move ataxx.Move, flag Flag, depth int, score int, key uint64) Entry {
+	data := uint64(move.From.Data) | (uint64(move.To.Data) << 8) | (uint64(flag) << 16) | (uint64(depth) << 18) | (uint64(score) << 25)
+	return Entry{
+		data: data ^ key,
+		key:  key,
+	}
 }
