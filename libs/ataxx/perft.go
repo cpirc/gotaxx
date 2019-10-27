@@ -42,7 +42,7 @@ func (pos Position) HashPerft(depth int) uint64 {
 	for i := 0; i < len(moves); i++ {
 		npos := pos
 		npos.MakeMove(moves[i])
-		nodes += npos.Perft(depth - 1)
+		nodes += npos.HashPerft(depth - 1)
 	}
 
 	perft_tt.PerftTranspositionTable.Insert(perft_tt.PerftEntry{

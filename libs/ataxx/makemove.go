@@ -19,7 +19,11 @@ func (pos *Position) MakeMove(move Move) {
 
 	// Move our piece
 	pos.pieces[pos.turn].Data ^= bbTo.Data | bbFrom.Data
-	pos.hashKey ^= SquareKeys[pos.turn][move.To.Data] ^ SquareKeys[pos.turn][move.From.Data]
+	if move.From == move.To {
+		pos.hashKey ^= SquareKeys[pos.turn][move.From.Data]
+	} else {
+		pos.hashKey ^= SquareKeys[pos.turn][move.To.Data] ^ SquareKeys[pos.turn][move.From.Data]
+	}
 
 	// Flip captured pieces
 	captured := pos.pieces[1-pos.turn].Data & neighbours

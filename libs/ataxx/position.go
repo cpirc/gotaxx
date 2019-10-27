@@ -13,21 +13,27 @@ type Position struct {
 	hashKey   uint64
 }
 
-// NewPosition ...
-func NewPosition(fen string) (*Position, error) {
-	var position Position
-	position.SetFen(fen)
-
-	position.hashKey = 0
+// HashPosition ...
+func HashPosition(position *Position) uint64 {
+	hashKey := uint64(0)
 	for color, pieceBB := range position.pieces {
 		for pieceBB.Data != 0 {
 			square := pieceBB.LSB()
 			pieceBB.Data ^= uint64(1) << square
-			position.hashKey ^= SquareKeys[color][square]
+			hashKey ^= SquareKeys[color][square]
 		}
 	}
-	position.hashKey ^= TurnKey
+	if position.turn == 1 {
+		hashKey ^= TurnKey
+	}
+	return hashKey
+}
 
+// NewPosition ...
+func NewPosition(fen string) (*Position, error) {
+	var position Position
+	position.SetFen(fen)
+	position.hashKey = HashPosition(&position)
 	return &position, nil
 }
 
