@@ -64,7 +64,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 	}
 
 	ttEntry := tt.TranspositionTable.Probe(pos.HashKey())
-	if false && ttEntry.Key() == pos.HashKey() {
+	if ttEntry.Key() == pos.HashKey() {
 		if ttEntry.Depth() >= depth &&
 			((ttEntry.Flag() == tt.FlagLower && ttEntry.Score() >= beta) ||
 				(ttEntry.Flag() == tt.FlagUpper && ttEntry.Score() <= alpha) ||
