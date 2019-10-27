@@ -105,3 +105,7 @@ func (pos Position) Print() {
 
 	fmt.Println(pos.hashKey)
 }
+
+func (pos *Position) HashKey() uint64 {
+	return pos.hashKey
+}

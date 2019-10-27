@@ -24,7 +24,7 @@ func (pos Position) Perft(depth int) uint64 {
 	return nodes
 }
 
-// Perft ...
+// HashPerft ...
 func (pos Position) HashPerft(depth int) uint64 {
 	if depth == 1 {
 		return uint64(pos.CountMoves())
