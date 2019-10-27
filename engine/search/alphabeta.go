@@ -14,7 +14,10 @@ type Result struct {
 	pv    []ataxx.Move
 }
 
+var nodeCount uint64 = 0
+
 func AlphaBeta(pos ataxx.Position, stop chan struct{}) ataxx.Move {
+	nodeCount = 0
 	startTime := time.Now()
 	var bestMove ataxx.Move
 
@@ -32,7 +35,8 @@ IdLoop:
 		}
 
 		bestMove = latestResult.pv[0]
-		fmt.Printf("info score %d depth %d time %s moves", latestResult.score, depth, timeTaken)
+		nps := float64(nodeCount) * float64(timeTaken.Milliseconds()) / 1000.0
+		fmt.Printf("info score %d depth %d time %d nodes %d nps %d moves", latestResult.score, depth, timeTaken.Milliseconds(), nodeCount, uint64(nps))
 		for _, move := range latestResult.pv {
 			fmt.Print(" ", move.String())
 		}
@@ -60,7 +64,7 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 	}
 
 	ttEntry := tt.TranspositionTable.Probe(pos.HashKey())
-	if ttEntry.Key() == pos.HashKey() {
+	if false && ttEntry.Key() == pos.HashKey() {
 		if ttEntry.Depth() >= depth &&
 			((ttEntry.Flag() == tt.FlagLower && ttEntry.Score() >= beta) ||
 				(ttEntry.Flag() == tt.FlagUpper && ttEntry.Score() <= alpha) ||
@@ -68,6 +72,8 @@ func AlphaBetaImpl(pos ataxx.Position, alpha int, beta int, depth int, ply int, 
 			return Result{ttEntry.Score(), []ataxx.Move{ttEntry.Move()}}
 		}
 	}
+
+	nodeCount++
 
 	moves := pos.LegalMoves()
 
